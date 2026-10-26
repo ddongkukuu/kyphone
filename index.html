@@ -1,145 +1,111 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My iPhone</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="theme-color" content="#000">
+  <title>KyPhone</title>
+  <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
+<div class="phone">
 
-  <div class="device">
+  <!-- 잠금화면 -->
+  <section id="lockScreen" class="screen lock-screen">
+    <div class="lock-overlay"></div>
 
-    <!-- 잠금화면 -->
-    <section id="lockScreen" class="screen lock-screen">
+    <div class="lock-content">
+      <div id="lockDate">10월 27일 화요일</div>
+      <div id="lockTime">4:41</div>
+    </div>
 
-      <div class="lock-top">
-        <div id="lockDate" class="lock-date">10월 27일 화요일</div>
-        <div id="lockTime" class="lock-time">4:41</div>
-      </div>
+    <div class="lock-bottom">
+      <button>☼</button>
+      <button>●</button>
+    </div>
 
-      <div class="lock-icons">
-        <div class="lock-circle">🔦</div>
-        <div class="lock-circle">📷</div>
-      </div>
-
-      <div class="unlock-guide">
-        <div class="chevron">⌃</div>
-        <span>위로 쓸어올려 잠금 해제</span>
-      </div>
-
-    </section>
-
-
-    <!-- 홈화면 -->
-    <section id="homeScreen" class="screen home-screen hidden">
-
-      <div class="status-bar">
-        <span id="homeTime">4:41</span>
-
-        <div class="status-right">
-          <span>●●</span>
-          <span>▰</span>
-          <span>▰</span>
-        </div>
-      </div>
+    <div class="swipe-area">
+      <div>⌃</div>
+      위로 쓸어올려 잠금 해제
+    </div>
+  </section>
 
 
-      <div class="app-grid">
+  <!-- 홈화면 -->
+  <section id="homeScreen" class="screen home-screen hidden">
 
-        <button class="app-button" onclick="openApp('instagram')">
-          <div class="app-icon instagram-icon">
-            <div class="instagram-camera"></div>
-          </div>
-          <span>Instagram</span>
-        </button>
+    <div class="status-bar">
+      <span id="homeTime">4:41</span>
+      <div>●●●　▰　▰</div>
+    </div>
 
+    <div class="app-grid">
 
-        <button class="app-button" onclick="openApp('kakao')">
-          <div class="app-icon kakao-icon">
-            <div class="kakao-face"></div>
-          </div>
-          <span>카카오톡</span>
-        </button>
+      <button class="app" onclick="openApp('instagram')">
+        <img src="./instagram.jpg">
+        <span>Instagram</span>
+      </button>
 
+      <button class="app" onclick="openApp('photos')">
+        <img src="./photos.jpg">
+        <span>사진</span>
+      </button>
 
-        <button class="app-button" onclick="openApp('notes')">
-          <div class="app-icon notes-icon">
-            <div class="notes-lines"></div>
-          </div>
-          <span>메모</span>
-        </button>
+      <button class="app" onclick="openApp('messages')">
+        <img src="./messages.jpg">
+        <span>메시지</span>
+      </button>
 
+      <button class="app" onclick="openApp('kakao')">
+        <img src="./kakao.jpg">
+        <span>카카오톡</span>
+      </button>
 
-        <button class="app-button" onclick="openApp('phone')">
-          <div class="app-icon phone-icon">
-            <div class="phone-symbol">⌕</div>
-          </div>
-          <span>전화</span>
-        </button>
+      <button class="app" onclick="openApp('phone')">
+        <img src="./phone.jpg">
+        <span>전화</span>
+      </button>
 
-
-        <button class="app-button" onclick="openApp('messages')">
-          <div class="app-icon messages-icon">
-            <div class="message-symbol"></div>
-          </div>
-          <span>메시지</span>
-        </button>
-
-      </div>
+    </div>
 
 
-      <div class="dock">
+    <!-- 하단 독 -->
+    <div class="dock">
 
-        <button class="dock-icon phone-dock" onclick="openApp('phone')">
-          <span>☎</span>
-        </button>
+      <button onclick="openApp('phone')">
+        <img src="./phone.jpg">
+      </button>
 
-        <button class="dock-icon safari-dock">
-          <span>◉</span>
-        </button>
+      <button onclick="openApp('photos')">
+        <img src="./photos.jpg">
+      </button>
 
-        <button class="dock-icon messages-dock" onclick="openApp('messages')">
-          <span>●</span>
-        </button>
+      <button onclick="openApp('messages')">
+        <img src="./messages.jpg">
+      </button>
 
-        <button class="dock-icon music-dock">
-          <span>♪</span>
-        </button>
+    </div>
 
-      </div>
+    <div class="home-bar"></div>
+  </section>
 
 
-      <div class="home-indicator"></div>
+  <!-- 앱 화면 -->
+  <section id="appScreen" class="screen app-screen hidden">
 
-    </section>
+    <header class="app-header">
+      <button onclick="closeApp()">‹</button>
+      <strong id="appTitle">앱</strong>
+    </header>
 
-<div class="app-grid">
+    <main id="appContent"></main>
 
-  <button class="app-button" onclick="openApp('instagram')">
-    <img class="photo-icon" src="./instagram.jpg">
-    <span>Instagram</span>
-  </button>
-
-  <button class="app-button" onclick="openApp('photos')">
-    <img class="photo-icon" src="./photos.jpg">
-    <span>사진</span>
-  </button>
-
-  <button class="app-button" onclick="openApp('messages')">
-    <img class="photo-icon" src="./messages.jpg">
-    <span>메시지</span>
-  </button>
-
-  <button class="app-button" onclick="openApp('kakao')">
-    <img class="photo-icon" src="./kakao.jpg">
-    <span>카카오톡</span>
-  </button>
-
-  <button class="app-button" onclick="openApp('phone')">
-    <img class="photo-icon" src="./phone.jpg">
-    <span>전화</span>
-  </button>
+    <div class="home-bar dark"></div>
+  </section>
 
 </div>
+
+<script src="./app.js"></script>
+</body>
+</html>
