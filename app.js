@@ -2,37 +2,26 @@ const lockScreen = document.getElementById("lockScreen");
 const homeScreen = document.getElementById("homeScreen");
 const appScreen = document.getElementById("appScreen");
 
-const lockTime = document.getElementById("lockTime");
-const lockDate = document.getElementById("lockDate");
-const homeTime = document.getElementById("homeTime");
-
 const appTitle = document.getElementById("appTitle");
 const appContent = document.getElementById("appContent");
 
 
-/* =========================
-   시간 / 날짜
-========================= */
+/* 시계 */
 
-function updateTime() {
+function updateClock(){
 
   const now = new Date();
 
   let hour = now.getHours();
-  const minute = String(now.getMinutes()).padStart(2, "0");
+  const minute = String(now.getMinutes()).padStart(2,"0");
 
-  const period = hour >= 12 ? "오후" : "오전";
+  hour = hour % 12 || 12;
 
-  hour = hour % 12;
+  document.getElementById("lockTime").textContent =
+    `${hour}:${minute}`;
 
-  if (hour === 0) {
-    hour = 12;
-  }
-
-  const timeText = `${hour}:${minute}`;
-
-  lockTime.textContent = timeText;
-  homeTime.textContent = timeText;
+  document.getElementById("homeTime").textContent =
+    `${hour}:${minute}`;
 
   const days = [
     "일요일",
@@ -44,232 +33,505 @@ function updateTime() {
     "토요일"
   ];
 
-  const month = now.getMonth() + 1;
-  const date = now.getDate();
-  const day = days[now.getDay()];
-
-  lockDate.textContent =
-    `${month}월 ${date}일 ${day}`;
+  document.getElementById("lockDate").textContent =
+    `${now.getMonth()+1}월 ${now.getDate()}일 ${days[now.getDay()]}`;
 }
 
-
-updateTime();
-
-setInterval(updateTime, 1000);
+updateClock();
+setInterval(updateClock,1000);
 
 
-/* =========================
-   잠금 해제
-========================= */
+/* 잠금해제 */
 
 let startY = null;
-let unlocked = false;
 
+lockScreen.addEventListener("touchstart",e=>{
+  startY = e.touches[0].clientY;
+});
 
-function unlock() {
+lockScreen.addEventListener("touchend",e=>{
 
-  if (unlocked) {
-    return;
-  }
+  if(startY === null) return;
 
-  unlocked = true;
+  const distance =
+    startY - e.changedTouches[0].clientY;
 
-  lockScreen.classList.add("unlocking");
-
-  setTimeout(() => {
-
-    lockScreen.classList.add("hidden");
-    homeScreen.classList.remove("hidden");
-
-  }, 430);
-}
-
-
-/* 터치 시작 */
-
-lockScreen.addEventListener("touchstart", (event) => {
-
-  startY = event.touches[0].clientY;
-
-}, { passive: true });
-
-
-/* 터치 이동 */
-
-lockScreen.addEventListener("touchend", (event) => {
-
-  if (startY === null) {
-    return;
-  }
-
-  const endY = event.changedTouches[0].clientY;
-
-  const distance = startY - endY;
-
-  if (distance > 60) {
+  if(distance > 55){
     unlock();
   }
 
   startY = null;
-
-}, { passive: true });
-
-
-/* PC에서 마우스로도 테스트 가능 */
-
-let mouseStartY = null;
-
-
-lockScreen.addEventListener("mousedown", (event) => {
-
-  mouseStartY = event.clientY;
-
 });
 
 
-lockScreen.addEventListener("mouseup", (event) => {
+function unlock(){
 
-  if (mouseStartY === null) {
+  if(lockScreen.classList.contains("unlocking"))
     return;
-  }
 
-  const distance = mouseStartY - event.clientY;
+  lockScreen.classList.add("unlocking");
 
-  if (distance > 60) {
-    unlock();
-  }
-
-  mouseStartY = null;
-
-});
+  setTimeout(()=>{
+    lockScreen.classList.add("hidden");
+    homeScreen.classList.remove("hidden");
+  },430);
+}
 
 
-/* =========================
-   앱 데이터
-========================= */
+/* 앱 데이터 */
 
 const apps = {
 
-  instagram: {
-    title: "Instagram",
-    html: `
-      <div class="placeholder">
-        <div class="placeholder-title">
-          Instagram
+  instagram:{
+    title:"Instagram",
+
+    html:`
+
+      <div class="page">
+
+        <div class="card profile-head">
+
+          <img
+            class="profile-pic"
+            src="./instagram.jpg"
+          >
+
+          <div>
+
+            <div class="big-title">
+              yushi
+            </div>
+
+            <div class="muted">
+              NCT WISH
+            </div>
+
+          </div>
+
         </div>
 
-        <div class="placeholder-text">
-          인스타그램 화면을 여기에 만들 거야.
-          <br><br>
-          프로필, 게시물, 스토리까지 실제 앱처럼 구성할 수 있어.
+
+        <div class="card">
+
+          <div class="story-row">
+
+            <div class="story">
+              <img src="./instagram.jpg">
+              <div>story</div>
+            </div>
+
+            <div class="story">
+              <img src="./photos.jpg">
+              <div>photo</div>
+            </div>
+
+            <div class="story">
+              <img src="./messages.jpg">
+              <div>daily</div>
+            </div>
+
+          </div>
+
         </div>
+
+
+        <div class="card">
+
+          <img
+            class="post-img"
+            src="./images/wallpaper.jpg"
+          >
+
+          <p>
+            ♡ 좋아요 1,284개
+          </p>
+
+          <div>
+            yushi 오늘도 좋은 하루 ☁️
+          </div>
+
+        </div>
+
       </div>
+
     `
   },
 
 
-  kakao: {
-    title: "카카오톡",
-    html: `
-      <div class="placeholder">
-        <div class="placeholder-title">
-          카카오톡
+  photos:{
+    title:"사진",
+
+    html:`
+
+      <div class="page">
+
+        <div class="card">
+
+          <div class="big-title">
+            사진
+          </div>
+
+          <div class="muted">
+            최근 항목
+          </div>
+
         </div>
 
-        <div class="placeholder-text">
-          친구 목록과 채팅방을 여기에 만들 거야.
-          <br><br>
-          나중에 최대 3명의 캐릭터와 채팅할 수 있도록 구성할 수 있어.
-        </div>
       </div>
+
+
+      <div class="gallery">
+
+        <img src="./instagram.jpg">
+        <img src="./photos.jpg">
+        <img src="./messages.jpg">
+        <img src="./kakao.jpg">
+        <img src="./phone.jpg">
+        <img src="./images/wallpaper.jpg">
+
+      </div>
+
     `
   },
 
 
-  notes: {
-    title: "메모",
-    html: `
-      <div class="placeholder">
-        <div class="placeholder-title">
-          메모
+  messages:{
+    title:"메시지",
+
+    html:`
+
+      <div class="page">
+
+        <div class="card">
+
+          <div class="big-title">
+            메시지
+          </div>
+
+          <div class="muted">
+            최근 대화
+          </div>
+
         </div>
 
-        <div class="placeholder-text">
-          메모 앱 화면이 들어갈 자리야.
+
+        <div
+          class="card app-row"
+          onclick="openChat('유우시')"
+        >
+
+          <img
+            class="avatar"
+            src="./instagram.jpg"
+          >
+
+          <div>
+
+            <div class="row-title">
+              유우시
+            </div>
+
+            <div class="muted">
+              오늘 뭐해?
+            </div>
+
+          </div>
+
         </div>
+
+
+        <div
+          class="card app-row"
+          onclick="openChat('리쿠')"
+        >
+
+          <img
+            class="avatar"
+            src="./photos.jpg"
+          >
+
+          <div>
+
+            <div class="row-title">
+              리쿠
+            </div>
+
+            <div class="muted">
+              사진 보내줘!
+            </div>
+
+          </div>
+
+        </div>
+
       </div>
+
     `
   },
 
 
-  phone: {
-    title: "전화",
-    html: `
-      <div class="placeholder">
-        <div class="placeholder-title">
-          전화
+  kakao:{
+    title:"카카오톡",
+
+    html:`
+
+      <div class="page">
+
+        <div class="card">
+
+          <div class="big-title">
+            친구
+          </div>
+
+          <div class="muted">
+            친구 3명
+          </div>
+
         </div>
 
-        <div class="placeholder-text">
-          전화 앱 화면이 들어갈 자리야.
+
+        <div
+          class="card app-row"
+          onclick="openChat('유우시')"
+        >
+
+          <img
+            class="avatar"
+            src="./instagram.jpg"
+          >
+
+          <div>
+            <div class="row-title">유우시</div>
+            <div class="muted">새로운 메시지가 있어요</div>
+          </div>
+
         </div>
+
+
+        <div
+          class="card app-row"
+          onclick="openChat('리쿠')"
+        >
+
+          <img
+            class="avatar"
+            src="./photos.jpg"
+          >
+
+          <div>
+            <div class="row-title">리쿠</div>
+            <div class="muted">안녕!</div>
+          </div>
+
+        </div>
+
+
+        <div
+          class="card app-row"
+          onclick="openChat('사쿠야')"
+        >
+
+          <img
+            class="avatar"
+            src="./messages.jpg"
+          >
+
+          <div>
+            <div class="row-title">사쿠야</div>
+            <div class="muted">ㅋㅋㅋㅋ</div>
+          </div>
+
+        </div>
+
       </div>
+
     `
   },
 
 
-  messages: {
-    title: "메시지",
-    html: `
-      <div class="placeholder">
-        <div class="placeholder-title">
-          메시지
-        </div>
+  phone:{
+    title:"전화",
 
-        <div class="placeholder-text">
-          메시지 앱 화면이 들어갈 자리야.
-        </div>
+    html:`
+
+      <div
+        class="phone-display"
+        id="dialDisplay"
+      ></div>
+
+      <div class="dial-pad">
+
+        <button class="dial-key" onclick="dial('1')">1</button>
+        <button class="dial-key" onclick="dial('2')">2</button>
+        <button class="dial-key" onclick="dial('3')">3</button>
+
+        <button class="dial-key" onclick="dial('4')">4</button>
+        <button class="dial-key" onclick="dial('5')">5</button>
+        <button class="dial-key" onclick="dial('6')">6</button>
+
+        <button class="dial-key" onclick="dial('7')">7</button>
+        <button class="dial-key" onclick="dial('8')">8</button>
+        <button class="dial-key" onclick="dial('9')">9</button>
+
+        <button class="dial-key" onclick="dial('*')">*</button>
+        <button class="dial-key" onclick="dial('0')">0</button>
+        <button class="dial-key" onclick="dial('#')">#</button>
+
       </div>
+
+      <div style="text-align:center">
+
+        <button
+          onclick="clearDial()"
+          style="color:#1677ff"
+        >
+          지우기
+        </button>
+
+      </div>
+
     `
   }
 
 };
 
 
-/* =========================
-   앱 열기
-========================= */
+/* 앱 열기 */
 
-function openApp(name) {
+function openApp(name){
 
-  const selectedApp = apps[name];
+  const app = apps[name];
 
-  if (!selectedApp) {
-    return;
-  }
+  if(!app) return;
 
-  appTitle.textContent = selectedApp.title;
-  appContent.innerHTML = selectedApp.html;
+  appTitle.textContent = app.title;
+
+  appContent.innerHTML = app.html;
 
   appScreen.classList.remove("hidden");
 
-  requestAnimationFrame(() => {
+  requestAnimationFrame(()=>{
     appScreen.classList.add("open");
   });
+
 }
 
 
-/* =========================
-   앱 닫기
-========================= */
+/* 앱 닫기 */
 
-function closeApp() {
+function closeApp(){
 
   appScreen.classList.remove("open");
 
-  setTimeout(() => {
-
+  setTimeout(()=>{
     appScreen.classList.add("hidden");
+  },320);
 
-  }, 350);
+}
+
+
+/* 채팅 */
+
+function openChat(name){
+
+  appTitle.textContent = name;
+
+  appContent.innerHTML = `
+
+    <div class="chat-window">
+
+      <div
+        class="chat-messages"
+        id="chatMessages"
+      >
+
+        <div class="bubble left">
+          ${name} 안녕! 👋
+        </div>
+
+        <div class="bubble left">
+          오늘 뭐해?
+        </div>
+
+        <div class="bubble right">
+          나 지금 폰 구경중 ㅋㅋ
+        </div>
+
+      </div>
+
+
+      <div class="chat-input">
+
+        <input
+          id="chatInput"
+          placeholder="메시지 입력"
+        >
+
+        <button onclick="sendMessage()">
+          전송
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+}
+
+
+/* 메시지 보내기 */
+
+function sendMessage(){
+
+  const input =
+    document.getElementById("chatInput");
+
+  const box =
+    document.getElementById("chatMessages");
+
+  if(!input.value.trim())
+    return;
+
+  const message =
+    document.createElement("div");
+
+  message.className = "bubble right";
+
+  message.textContent =
+    input.value.trim();
+
+  box.appendChild(message);
+
+  input.value = "";
+
+  box.scrollTop =
+    box.scrollHeight;
+}
+
+
+/* 전화번호 */
+
+let dialNumber = "";
+
+function dial(number){
+
+  dialNumber += number;
+
+  const display =
+    document.getElementById("dialDisplay");
+
+  if(display)
+    display.textContent = dialNumber;
+}
+
+
+function clearDial(){
+
+  dialNumber = "";
+
+  const display =
+    document.getElementById("dialDisplay");
+
+  if(display)
+    display.textContent = "";
 }
