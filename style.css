@@ -1,698 +1,434 @@
-* {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
+*{
+  box-sizing:border-box;
 }
 
-html,
-body {
-  margin: 0;
-  width: 100%;
-  height: 100%;
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:#111;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Apple SD Gothic Neo","Noto Sans KR",sans-serif;
 }
 
-body {
-  background: #111;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Apple SD Gothic Neo",
-    "Noto Sans KR",
-    sans-serif;
+button{
+  border:0;
+  background:none;
+  padding:0;
+  font:inherit;
 }
 
+.phone{
+  position:relative;
+  width:min(100vw,430px);
+  height:min(100vh,900px);
+  margin:auto;
+  overflow:hidden;
+  background:#000;
+  color:white;
+}
 
-/* =========================
-   아이폰 본체
-========================= */
+.screen{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+}
 
-.device {
-  position: relative;
-  width: 390px;
-  height: 844px;
-  overflow: hidden;
-
-  border-radius: 48px;
-
-  background: #000;
-
-  box-shadow:
-    0 0 0 7px #222,
-    0 25px 70px rgba(0, 0, 0, 0.65);
+.hidden{
+  display:none!important;
 }
 
 
-/* =========================
-   공통 화면
-========================= */
+/* 잠금화면 */
 
-.screen {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+.lock-screen{
+  background:url("./images/wallpaper.jpg") center/cover;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  user-select:none;
+  touch-action:none;
 }
 
-.hidden {
-  display: none !important;
+.lock-overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.12);
 }
 
-
-/* =========================
-   잠금화면
-========================= */
-
-.lock-screen {
-  color: white;
-  text-align: center;
-
-  background:
-    linear-gradient(
-      rgba(0, 0, 0, 0.08),
-      rgba(0, 0, 0, 0.28)
-    ),
-    url("images/wallpaper.jpg") center / cover no-repeat;
-
-  touch-action: none;
-
-  transition:
-    transform 0.45s ease,
-    opacity 0.45s ease;
+.lock-content{
+  position:absolute;
+  top:85px;
+  text-align:center;
+  text-shadow:0 2px 10px rgba(0,0,0,.5);
 }
 
-.lock-screen.unlocking {
-  transform: translateY(-100%);
-  opacity: 0;
+#lockDate{
+  font-size:20px;
 }
 
-
-.lock-top {
-  position: absolute;
-  top: 105px;
-  left: 0;
-  right: 0;
+#lockTime{
+  font-size:82px;
+  font-weight:300;
+  letter-spacing:-5px;
 }
 
-
-.lock-date {
-  font-size: 18px;
-  font-weight: 500;
-  margin-bottom: 2px;
+.lock-bottom{
+  position:absolute;
+  bottom:80px;
+  left:25px;
+  right:25px;
+  display:flex;
+  justify-content:space-between;
 }
 
-
-.lock-time {
-  font-size: 78px;
-  line-height: 1;
-  font-weight: 300;
-  letter-spacing: -4px;
+.lock-bottom button{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  color:white;
+  background:rgba(30,30,30,.45);
+  backdrop-filter:blur(15px);
+  font-size:22px;
 }
 
+.swipe-area{
+  position:absolute;
+  bottom:17px;
+  text-align:center;
+  font-size:11px;
+}
 
-.lock-icons {
-  position: absolute;
-  left: 30px;
-  right: 30px;
-  bottom: 75px;
-
-  display: flex;
-  justify-content: space-between;
+.swipe-area div{
+  font-size:22px;
 }
 
 
-.lock-circle {
-  width: 50px;
-  height: 50px;
+/* 잠금해제 */
 
-  border-radius: 50%;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: rgba(30, 30, 30, 0.48);
-  backdrop-filter: blur(12px);
-
-  font-size: 21px;
+.unlocking{
+  animation:unlock .43s forwards;
 }
 
-
-.unlock-guide {
-  position: absolute;
-  bottom: 17px;
-  left: 0;
-  right: 0;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  font-size: 11px;
-  opacity: 0.85;
-}
-
-
-.chevron {
-  font-size: 18px;
-  line-height: 12px;
-  animation: upDown 1.5s infinite;
-}
-
-
-@keyframes upDown {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-5px);
+@keyframes unlock{
+  to{
+    transform:translateY(-100%);
+    opacity:0;
   }
 }
 
 
-/* =========================
-   홈 화면
-========================= */
+/* 홈 */
 
-.home-screen {
-  color: white;
+.home-screen{
+  background:url("./images/wallpaper.jpg") center/cover;
+}
 
-  background:
-    linear-gradient(
-      rgba(0, 0, 0, 0.08),
-      rgba(0, 0, 0, 0.25)
-    ),
-    url("images/wallpaper.jpg") center / cover no-repeat;
+.status-bar{
+  height:52px;
+  padding:12px 22px 0;
+  display:flex;
+  justify-content:space-between;
+  font-size:15px;
+  font-weight:bold;
+  text-shadow:0 1px 5px #000;
+}
+
+.app-grid{
+  padding:15px 22px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:25px 15px;
+}
+
+.app{
+  color:white;
+  text-align:center;
+  cursor:pointer;
+}
+
+.app img{
+  width:59px;
+  height:59px;
+  object-fit:cover;
+  border-radius:14px;
+  display:block;
+  margin:auto auto 6px;
+  box-shadow:0 5px 15px rgba(0,0,0,.3);
+}
+
+.app span{
+  font-size:12px;
+  text-shadow:0 1px 4px #000;
+  white-space:nowrap;
 }
 
 
-/* 상태바 */
+/* 독 */
 
-.status-bar {
-  position: absolute;
+.dock{
+  position:absolute;
+  left:12px;
+  right:12px;
+  bottom:28px;
+  height:78px;
+  border-radius:27px;
+  background:rgba(255,255,255,.22);
+  backdrop-filter:blur(20px);
 
-  top: 13px;
-  left: 24px;
-  right: 24px;
+  display:flex;
+  justify-content:space-evenly;
+  align-items:center;
+}
 
-  height: 24px;
+.dock button{
+  cursor:pointer;
+}
 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  font-size: 14px;
-  font-weight: 600;
-
-  z-index: 10;
+.dock img{
+  width:58px;
+  height:58px;
+  object-fit:cover;
+  border-radius:14px;
+  display:block;
 }
 
 
-.status-right {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 10px;
+/* 홈 인디케이터 */
+
+.home-bar{
+  position:absolute;
+  bottom:8px;
+  left:50%;
+  transform:translateX(-50%);
+  width:115px;
+  height:5px;
+  border-radius:5px;
+  background:white;
+}
+
+.home-bar.dark{
+  background:#111;
 }
 
 
-/* 앱 그리드 */
+/* 앱 */
 
-.app-grid {
-  position: absolute;
+.app-screen{
+  background:#f7f7f7;
+  color:#111;
+  transform:translateX(100%);
+  transition:.32s ease;
+}
 
-  top: 78px;
-  left: 22px;
-  right: 22px;
+.app-screen.open{
+  transform:translateX(0);
+}
 
-  display: grid;
+.app-header{
+  height:60px;
+  background:rgba(255,255,255,.95);
+  border-bottom:1px solid #ddd;
 
-  grid-template-columns:
-    repeat(4, 1fr);
+  display:flex;
+  justify-content:center;
+  align-items:center;
 
-  column-gap: 10px;
-  row-gap: 23px;
+  position:relative;
+}
+
+.app-header button{
+  position:absolute;
+  left:14px;
+  font-size:42px;
+  color:#1677ff;
+  font-weight:200;
+  cursor:pointer;
+}
+
+.app-content{
+  height:calc(100% - 60px);
+  overflow:auto;
+  padding-bottom:30px;
 }
 
 
-.app-button {
-  border: 0;
-  padding: 0;
+/* 공통 */
 
-  background: transparent;
+.page{
+  padding:20px 18px;
+}
 
-  color: white;
+.card{
+  background:white;
+  border-radius:18px;
+  padding:16px;
+  margin-bottom:14px;
+  box-shadow:0 1px 5px rgba(0,0,0,.08);
+}
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.big-title{
+  font-size:24px;
+  font-weight:800;
+}
 
-  font-size: 11px;
-
-  cursor: pointer;
+.muted{
+  color:#777;
+  font-size:13px;
 }
 
 
-.app-icon {
-  position: relative;
+/* 인스타 */
 
-  width: 59px;
-  height: 59px;
+.profile-head{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
 
-  margin-bottom: 5px;
+.profile-pic{
+  width:72px;
+  height:72px;
+  border-radius:50%;
+  object-fit:cover;
+}
 
-  border-radius: 14px;
+.post-img{
+  width:100%;
+  border-radius:14px;
+  display:block;
+}
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.story-row{
+  display:flex;
+  gap:15px;
+}
 
-  box-shadow:
-    0 4px 12px rgba(0, 0, 0, 0.25);
+.story{
+  text-align:center;
+  font-size:11px;
+}
 
-  overflow: hidden;
+.story img{
+  width:62px;
+  height:62px;
+  border-radius:50%;
+  object-fit:cover;
 }
 
 
-/* Instagram */
+/* 사진 */
 
-.instagram-icon {
-  background:
-    linear-gradient(
-      135deg,
-      #feda75,
-      #fa7e1e,
-      #d62976,
-      #962fbf,
-      #4f5bd5
-    );
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:3px;
+}
+
+.gallery img{
+  width:100%;
+  aspect-ratio:1;
+  object-fit:cover;
 }
 
 
-.instagram-icon::before {
-  content: "";
+/* 친구 */
 
-  width: 28px;
-  height: 28px;
+.app-row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  cursor:pointer;
+}
 
-  border: 3px solid white;
+.avatar{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  object-fit:cover;
+}
 
-  border-radius: 8px;
+.row-title{
+  font-weight:bold;
 }
 
 
-.instagram-icon::after {
-  content: "";
+/* 채팅 */
 
-  position: absolute;
-
-  width: 6px;
-  height: 6px;
-
-  right: 15px;
-  top: 15px;
-
-  border-radius: 50%;
-
-  background: white;
+.chat-window{
+  height:100%;
+  display:flex;
+  flex-direction:column;
 }
 
-
-.instagram-camera {
-  position: absolute;
-
-  width: 9px;
-  height: 9px;
-
-  border: 3px solid white;
-
-  border-radius: 50%;
+.chat-messages{
+  flex:1;
+  overflow:auto;
+  padding:18px;
+  background:#bacee6;
 }
 
-
-/* 카카오톡 */
-
-.kakao-icon {
-  background: #fee500;
+.bubble{
+  max-width:75%;
+  padding:10px 13px;
+  border-radius:16px;
+  margin:7px 0;
+  font-size:14px;
 }
 
-
-.kakao-face {
-  width: 34px;
-  height: 27px;
-
-  border-radius: 50%;
-
-  background: #3b3b3b;
-
-  position: relative;
+.bubble.left{
+  background:white;
+  border-top-left-radius:5px;
 }
 
-
-.kakao-face::after {
-  content: "";
-
-  position: absolute;
-
-  bottom: -6px;
-  left: 7px;
-
-  width: 9px;
-  height: 9px;
-
-  background: #3b3b3b;
-
-  transform: rotate(30deg);
+.bubble.right{
+  background:#ffe66d;
+  margin-left:auto;
+  border-top-right-radius:5px;
 }
 
-
-/* 메모 */
-
-.notes-icon {
-  background: #f5f5f5;
+.chat-input{
+  display:flex;
+  gap:8px;
+  padding:10px;
+  background:white;
 }
 
-
-.notes-icon::before {
-  content: "";
-
-  position: absolute;
-
-  top: 0;
-  left: 0;
-  right: 0;
-
-  height: 17px;
-
-  background: #ffd54f;
+.chat-input input{
+  flex:1;
+  border:1px solid #ddd;
+  border-radius:18px;
+  padding:9px 12px;
+  outline:none;
 }
 
-
-.notes-lines {
-  width: 32px;
-  height: 24px;
-
-  border-top: 2px solid #aaa;
-  border-bottom: 2px solid #aaa;
-
-  position: relative;
-}
-
-
-.notes-lines::after {
-  content: "";
-
-  position: absolute;
-
-  top: 10px;
-  left: 0;
-
-  width: 32px;
-  height: 2px;
-
-  background: #aaa;
+.chat-input button{
+  background:#ffe66d;
+  border-radius:18px;
+  padding:0 15px;
 }
 
 
 /* 전화 */
 
-.phone-icon {
-  background: #34c759;
+.phone-display{
+  height:90px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
 }
 
-
-.phone-symbol {
-  color: white;
-
-  font-size: 31px;
-
-  transform: rotate(-25deg);
+.dial-pad{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  padding:22px;
 }
 
-
-/* 메시지 */
-
-.messages-icon {
-  background: #34c759;
-}
-
-
-.message-symbol {
-  width: 31px;
-  height: 23px;
-
-  border-radius: 50%;
-
-  background: white;
-
-  position: relative;
-}
-
-
-.message-symbol::after {
-  content: "";
-
-  position: absolute;
-
-  bottom: -5px;
-  left: 7px;
-
-  width: 9px;
-  height: 9px;
-
-  background: white;
-
-  transform: rotate(30deg);
-}
-
-
-/* =========================
-   Dock
-========================= */
-
-.dock {
-  position: absolute;
-
-  left: 13px;
-  right: 13px;
-  bottom: 24px;
-
-  height: 82px;
-
-  border-radius: 27px;
-
-  background: rgba(255, 255, 255, 0.22);
-
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-
-
-.dock-icon {
-  width: 56px;
-  height: 56px;
-
-  border: 0;
-
-  border-radius: 15px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  color: white;
-
-  font-size: 27px;
-
-  cursor: pointer;
-}
-
-
-.phone-dock {
-  background: #34c759;
-}
-
-
-.safari-dock {
-  background: #eaf7ff;
-  color: #1684ff;
-}
-
-
-.messages-dock {
-  background: #34c759;
-}
-
-
-.music-dock {
-  background: #111;
-}
-
-
-/* =========================
-   홈 인디케이터
-========================= */
-
-.home-indicator {
-  position: absolute;
-
-  left: 50%;
-  bottom: 8px;
-
-  width: 135px;
-  height: 5px;
-
-  transform: translateX(-50%);
-
-  border-radius: 10px;
-
-  background: white;
-
-  z-index: 30;
-}
-
-
-.home-indicator.dark {
-  background: #111;
-}
-
-
-/* =========================
-   앱 화면
-========================= */
-
-.app-screen {
-  background: #f5f5f7;
-
-  transform: translateX(100%);
-
-  transition: transform 0.35s ease;
-
-  z-index: 20;
-}
-
-
-.app-screen.open {
-  transform: translateX(0);
-}
-
-
-.app-header {
-  height: 92px;
-
-  padding:
-    44px 18px 0;
-
-  background: rgba(255, 255, 255, 0.96);
-
-  display: flex;
-  align-items: center;
-
-  gap: 8px;
-
-  border-bottom:
-    1px solid #ddd;
-}
-
-
-.back-button {
-  width: 35px;
-  height: 35px;
-
-  border: 0;
-  background: transparent;
-
-  font-size: 38px;
-  line-height: 25px;
-
-  color: #007aff;
-
-  cursor: pointer;
-}
-
-
-.app-title {
-  font-size: 20px;
-  font-weight: 700;
-}
-
-
-.app-content {
-  height: calc(100% - 92px);
-
-  padding: 22px;
-
-  overflow-y: auto;
-}
-
-
-.placeholder {
-  background: white;
-
-  border-radius: 18px;
-
-  padding: 22px;
-
-  box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.06);
-
-  font-size: 16px;
-}
-
-
-.placeholder-title {
-  font-size: 24px;
-  font-weight: 700;
-
-  margin-bottom: 8px;
-}
-
-
-.placeholder-text {
-  color: #666;
-  line-height: 1.5;
-}
-
-
-/* =========================
-   모바일 대응
-========================= */
-
-@media (max-width: 430px) {
-
-  body {
-    background: #000;
-  }
-
-  .device {
-    width: 100vw;
-    height: 100vh;
-
-    max-width: none;
-    max-height: none;
-
-    border-radius: 0;
-
-
-    .photo-icon {
-  width: 59px;
-  height: 59px;
-  object-fit: cover;
-  border-radius: 14px;
-  display: block;
-  margin-bottom: 5px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-}
-
-    box-shadow: none;
-  }
-
+.dial-key{
+  height:68px;
+  border-radius:50%;
+  background:#e8e8ea;
+  font-size:24px;
 }
