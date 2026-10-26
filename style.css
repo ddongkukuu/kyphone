@@ -1,0 +1,687 @@
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Apple SD Gothic Neo",
+    "Noto Sans KR",
+    sans-serif;
+}
+
+
+/* =========================
+   아이폰 본체
+========================= */
+
+.device {
+  position: relative;
+  width: 390px;
+  height: 844px;
+  overflow: hidden;
+
+  border-radius: 48px;
+
+  background: #000;
+
+  box-shadow:
+    0 0 0 7px #222,
+    0 25px 70px rgba(0, 0, 0, 0.65);
+}
+
+
+/* =========================
+   공통 화면
+========================= */
+
+.screen {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hidden {
+  display: none !important;
+}
+
+
+/* =========================
+   잠금화면
+========================= */
+
+.lock-screen {
+  color: white;
+  text-align: center;
+
+  background:
+    linear-gradient(
+      rgba(0, 0, 0, 0.08),
+      rgba(0, 0, 0, 0.28)
+    ),
+    url("images/wallpaper.jpg") center / cover no-repeat;
+
+  touch-action: none;
+
+  transition:
+    transform 0.45s ease,
+    opacity 0.45s ease;
+}
+
+.lock-screen.unlocking {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+
+.lock-top {
+  position: absolute;
+  top: 105px;
+  left: 0;
+  right: 0;
+}
+
+
+.lock-date {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+
+.lock-time {
+  font-size: 78px;
+  line-height: 1;
+  font-weight: 300;
+  letter-spacing: -4px;
+}
+
+
+.lock-icons {
+  position: absolute;
+  left: 30px;
+  right: 30px;
+  bottom: 75px;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.lock-circle {
+  width: 50px;
+  height: 50px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(30, 30, 30, 0.48);
+  backdrop-filter: blur(12px);
+
+  font-size: 21px;
+}
+
+
+.unlock-guide {
+  position: absolute;
+  bottom: 17px;
+  left: 0;
+  right: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  font-size: 11px;
+  opacity: 0.85;
+}
+
+
+.chevron {
+  font-size: 18px;
+  line-height: 12px;
+  animation: upDown 1.5s infinite;
+}
+
+
+@keyframes upDown {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+
+/* =========================
+   홈 화면
+========================= */
+
+.home-screen {
+  color: white;
+
+  background:
+    linear-gradient(
+      rgba(0, 0, 0, 0.08),
+      rgba(0, 0, 0, 0.25)
+    ),
+    url("images/wallpaper.jpg") center / cover no-repeat;
+}
+
+
+/* 상태바 */
+
+.status-bar {
+  position: absolute;
+
+  top: 13px;
+  left: 24px;
+  right: 24px;
+
+  height: 24px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  z-index: 10;
+}
+
+
+.status-right {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+}
+
+
+/* 앱 그리드 */
+
+.app-grid {
+  position: absolute;
+
+  top: 78px;
+  left: 22px;
+  right: 22px;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  column-gap: 10px;
+  row-gap: 23px;
+}
+
+
+.app-button {
+  border: 0;
+  padding: 0;
+
+  background: transparent;
+
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  font-size: 11px;
+
+  cursor: pointer;
+}
+
+
+.app-icon {
+  position: relative;
+
+  width: 59px;
+  height: 59px;
+
+  margin-bottom: 5px;
+
+  border-radius: 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.25);
+
+  overflow: hidden;
+}
+
+
+/* Instagram */
+
+.instagram-icon {
+  background:
+    linear-gradient(
+      135deg,
+      #feda75,
+      #fa7e1e,
+      #d62976,
+      #962fbf,
+      #4f5bd5
+    );
+}
+
+
+.instagram-icon::before {
+  content: "";
+
+  width: 28px;
+  height: 28px;
+
+  border: 3px solid white;
+
+  border-radius: 8px;
+}
+
+
+.instagram-icon::after {
+  content: "";
+
+  position: absolute;
+
+  width: 6px;
+  height: 6px;
+
+  right: 15px;
+  top: 15px;
+
+  border-radius: 50%;
+
+  background: white;
+}
+
+
+.instagram-camera {
+  position: absolute;
+
+  width: 9px;
+  height: 9px;
+
+  border: 3px solid white;
+
+  border-radius: 50%;
+}
+
+
+/* 카카오톡 */
+
+.kakao-icon {
+  background: #fee500;
+}
+
+
+.kakao-face {
+  width: 34px;
+  height: 27px;
+
+  border-radius: 50%;
+
+  background: #3b3b3b;
+
+  position: relative;
+}
+
+
+.kakao-face::after {
+  content: "";
+
+  position: absolute;
+
+  bottom: -6px;
+  left: 7px;
+
+  width: 9px;
+  height: 9px;
+
+  background: #3b3b3b;
+
+  transform: rotate(30deg);
+}
+
+
+/* 메모 */
+
+.notes-icon {
+  background: #f5f5f5;
+}
+
+
+.notes-icon::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: 17px;
+
+  background: #ffd54f;
+}
+
+
+.notes-lines {
+  width: 32px;
+  height: 24px;
+
+  border-top: 2px solid #aaa;
+  border-bottom: 2px solid #aaa;
+
+  position: relative;
+}
+
+
+.notes-lines::after {
+  content: "";
+
+  position: absolute;
+
+  top: 10px;
+  left: 0;
+
+  width: 32px;
+  height: 2px;
+
+  background: #aaa;
+}
+
+
+/* 전화 */
+
+.phone-icon {
+  background: #34c759;
+}
+
+
+.phone-symbol {
+  color: white;
+
+  font-size: 31px;
+
+  transform: rotate(-25deg);
+}
+
+
+/* 메시지 */
+
+.messages-icon {
+  background: #34c759;
+}
+
+
+.message-symbol {
+  width: 31px;
+  height: 23px;
+
+  border-radius: 50%;
+
+  background: white;
+
+  position: relative;
+}
+
+
+.message-symbol::after {
+  content: "";
+
+  position: absolute;
+
+  bottom: -5px;
+  left: 7px;
+
+  width: 9px;
+  height: 9px;
+
+  background: white;
+
+  transform: rotate(30deg);
+}
+
+
+/* =========================
+   Dock
+========================= */
+
+.dock {
+  position: absolute;
+
+  left: 13px;
+  right: 13px;
+  bottom: 24px;
+
+  height: 82px;
+
+  border-radius: 27px;
+
+  background: rgba(255, 255, 255, 0.22);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+
+.dock-icon {
+  width: 56px;
+  height: 56px;
+
+  border: 0;
+
+  border-radius: 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+
+  font-size: 27px;
+
+  cursor: pointer;
+}
+
+
+.phone-dock {
+  background: #34c759;
+}
+
+
+.safari-dock {
+  background: #eaf7ff;
+  color: #1684ff;
+}
+
+
+.messages-dock {
+  background: #34c759;
+}
+
+
+.music-dock {
+  background: #111;
+}
+
+
+/* =========================
+   홈 인디케이터
+========================= */
+
+.home-indicator {
+  position: absolute;
+
+  left: 50%;
+  bottom: 8px;
+
+  width: 135px;
+  height: 5px;
+
+  transform: translateX(-50%);
+
+  border-radius: 10px;
+
+  background: white;
+
+  z-index: 30;
+}
+
+
+.home-indicator.dark {
+  background: #111;
+}
+
+
+/* =========================
+   앱 화면
+========================= */
+
+.app-screen {
+  background: #f5f5f7;
+
+  transform: translateX(100%);
+
+  transition: transform 0.35s ease;
+
+  z-index: 20;
+}
+
+
+.app-screen.open {
+  transform: translateX(0);
+}
+
+
+.app-header {
+  height: 92px;
+
+  padding:
+    44px 18px 0;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  border-bottom:
+    1px solid #ddd;
+}
+
+
+.back-button {
+  width: 35px;
+  height: 35px;
+
+  border: 0;
+  background: transparent;
+
+  font-size: 38px;
+  line-height: 25px;
+
+  color: #007aff;
+
+  cursor: pointer;
+}
+
+
+.app-title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+
+.app-content {
+  height: calc(100% - 92px);
+
+  padding: 22px;
+
+  overflow-y: auto;
+}
+
+
+.placeholder {
+  background: white;
+
+  border-radius: 18px;
+
+  padding: 22px;
+
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.06);
+
+  font-size: 16px;
+}
+
+
+.placeholder-title {
+  font-size: 24px;
+  font-weight: 700;
+
+  margin-bottom: 8px;
+}
+
+
+.placeholder-text {
+  color: #666;
+  line-height: 1.5;
+}
+
+
+/* =========================
+   모바일 대응
+========================= */
+
+@media (max-width: 430px) {
+
+  body {
+    background: #000;
+  }
+
+  .device {
+    width: 100vw;
+    height: 100vh;
+
+    max-width: none;
+    max-height: none;
+
+    border-radius: 0;
+
+    box-shadow: none;
+  }
+
+}
