@@ -681,6 +681,17 @@ body {
 
     border-radius: 0;
 
+
+    .photo-icon {
+  width: 59px;
+  height: 59px;
+  object-fit: cover;
+  border-radius: 14px;
+  display: block;
+  margin-bottom: 5px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
     box-shadow: none;
   }
 
