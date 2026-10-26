@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My iPhone</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="device">
+
+    <!-- 잠금화면 -->
+    <section id="lockScreen" class="screen lock-screen">
+
+      <div class="lock-top">
+        <div id="lockDate" class="lock-date">10월 27일 화요일</div>
+        <div id="lockTime" class="lock-time">4:41</div>
+      </div>
+
+      <div class="lock-icons">
+        <div class="lock-circle">🔦</div>
+        <div class="lock-circle">📷</div>
+      </div>
+
+      <div class="unlock-guide">
+        <div class="chevron">⌃</div>
+        <span>위로 쓸어올려 잠금 해제</span>
+      </div>
+
+    </section>
+
+
+    <!-- 홈화면 -->
+    <section id="homeScreen" class="screen home-screen hidden">
+
+      <div class="status-bar">
+        <span id="homeTime">4:41</span>
+
+        <div class="status-right">
+          <span>●●</span>
+          <span>▰</span>
+          <span>▰</span>
+        </div>
+      </div>
+
+
+      <div class="app-grid">
+
+        <button class="app-button" onclick="openApp('instagram')">
+          <div class="app-icon instagram-icon">
+            <div class="instagram-camera"></div>
+          </div>
+          <span>Instagram</span>
+        </button>
+
+
+        <button class="app-button" onclick="openApp('kakao')">
+          <div class="app-icon kakao-icon">
+            <div class="kakao-face"></div>
+          </div>
+          <span>카카오톡</span>
+        </button>
+
+
+        <button class="app-button" onclick="openApp('notes')">
+          <div class="app-icon notes-icon">
+            <div class="notes-lines"></div>
+          </div>
+          <span>메모</span>
+        </button>
+
+
+        <button class="app-button" onclick="openApp('phone')">
+          <div class="app-icon phone-icon">
+            <div class="phone-symbol">⌕</div>
+          </div>
+          <span>전화</span>
+        </button>
+
+
+        <button class="app-button" onclick="openApp('messages')">
+          <div class="app-icon messages-icon">
+            <div class="message-symbol"></div>
+          </div>
+          <span>메시지</span>
+        </button>
+
+      </div>
+
+
+      <div class="dock">
+
+        <button class="dock-icon phone-dock" onclick="openApp('phone')">
+          <span>☎</span>
+        </button>
+
+        <button class="dock-icon safari-dock">
+          <span>◉</span>
+        </button>
+
+        <button class="dock-icon messages-dock" onclick="openApp('messages')">
+          <span>●</span>
+        </button>
+
+        <button class="dock-icon music-dock">
+          <span>♪</span>
+        </button>
+
+      </div>
+
+
+      <div class="home-indicator"></div>
+
+    </section>
+
+
+    <!-- 앱 화면 -->
+    <section id="appScreen" class="screen app-screen hidden">
+
+      <div class="app-header">
+
+        <button class="back-button" onclick="closeApp()">
+          ‹
+        </button>
+
+        <div id="appTitle" class="app-title">
+          앱
+        </div>
+
+      </div>
+
+
+      <main id="appContent" class="app-content"></main>
+
+      <div class="home-indicator dark"></div>
+
+    </section>
+
+  </div>
+
+
+  <script src="app.js"></script>
+
+</body>
+</html>
